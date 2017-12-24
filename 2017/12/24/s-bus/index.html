@@ -79,21 +79,22 @@
 
 
 
-<meta name="description" content="最近做一个项目需要用到无线遥控，在网上找到了一个某飞控的遥控器，总共有9个PWM输出通道，其中第九通道是可以在S.BUS信号和PWM之间任意切换的，使用非常方便，项目中因为要使用到具体的远程遥控数值，就只采用了S.BUS这种信号。看了S.BUS信号也是闷得，就在网上查资料，最终将它成功使用,网上也有很多好的讲解，这里我还是汇总下，附上相关程序。下面就详细介绍下S.BUS。 一. S.BUS协议 S">
+<meta name="description" content="总结最近用的S.BUS协议">
 <meta name="keywords" content="SBUS通信协议">
 <meta property="og:type" content="article">
 <meta property="og:title" content="s-bus通信协议及解析程序的实现">
 <meta property="og:url" content="http://yoursite.com/2017/12/24/s-bus/index.html">
 <meta property="og:site_name" content="永兵的个人站">
-<meta property="og:description" content="最近做一个项目需要用到无线遥控，在网上找到了一个某飞控的遥控器，总共有9个PWM输出通道，其中第九通道是可以在S.BUS信号和PWM之间任意切换的，使用非常方便，项目中因为要使用到具体的远程遥控数值，就只采用了S.BUS这种信号。看了S.BUS信号也是闷得，就在网上查资料，最终将它成功使用,网上也有很多好的讲解，这里我还是汇总下，附上相关程序。下面就详细介绍下S.BUS。 一. S.BUS协议 S">
+<meta property="og:description" content="总结最近用的S.BUS协议">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://p1b2dlbc2.bkt.clouddn.com/SBUS3.jpg">
 <meta property="og:image" content="http://p1b2dlbc2.bkt.clouddn.com/SBUS1.jpg">
 <meta property="og:image" content="http://p1b2dlbc2.bkt.clouddn.com/SBUS2.png">
-<meta property="og:updated_time" content="2017-12-24T12:05:29.114Z">
+<meta property="og:updated_time" content="2017-12-24T12:28:12.025Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="s-bus通信协议及解析程序的实现">
-<meta name="twitter:description" content="最近做一个项目需要用到无线遥控，在网上找到了一个某飞控的遥控器，总共有9个PWM输出通道，其中第九通道是可以在S.BUS信号和PWM之间任意切换的，使用非常方便，项目中因为要使用到具体的远程遥控数值，就只采用了S.BUS这种信号。看了S.BUS信号也是闷得，就在网上查资料，最终将它成功使用,网上也有很多好的讲解，这里我还是汇总下，附上相关程序。下面就详细介绍下S.BUS。 一. S.BUS协议 S">
-<meta name="twitter:image" content="http://p1b2dlbc2.bkt.clouddn.com/SBUS1.jpg">
+<meta name="twitter:description" content="总结最近用的S.BUS协议">
+<meta name="twitter:image" content="http://p1b2dlbc2.bkt.clouddn.com/SBUS3.jpg">
 
 
 
@@ -355,7 +356,7 @@
       
 
       
-        <p>最近做一个项目需要用到无线遥控，在网上找到了一个某飞控的遥控器，总共有9个PWM输出通道，其中第九通道是可以在S.BUS信号和PWM之间任意切换的，使用非常方便，项目中因为要使用到具体的远程遥控数值，就只采用了S.BUS这种信号。看了S.BUS信号也是闷得，就在网上查资料，最终将它成功使用,网上也有很多好的讲解，这里我还是汇总下，附上相关程序。下面就详细介绍下S.BUS。</p>
+        <p><img src="http://p1b2dlbc2.bkt.clouddn.com/SBUS3.jpg" alt=""><br>总结最近用的S.BUS协议<a id="more"></a><br>最近做一个项目需要用到无线遥控，在网上找到了一个某飞控的遥控器，总共有9个PWM输出通道，其中第九通道是可以在S.BUS信号和PWM之间任意切换的，使用非常方便，项目中因为要使用到具体的远程遥控数值，就只采用了S.BUS这种信号。看了S.BUS信号也是闷得，就在网上查资料，最终将它成功使用,网上也有很多好的讲解，这里我还是汇总下，附上相关程序。下面就详细介绍下S.BUS。</p>
 <h2 id="一-S-BUS协议"><a href="#一-S-BUS协议" class="headerlink" title="一. S.BUS协议"></a>一. S.BUS协议</h2><ol>
 <li><p>S-BUS协议实际上通过串口进行数据发送。但是需要注意的是，S-BUS的逻辑电平是反的，需用如下电路对电平反相，再接到串口的RXD管脚，转化电路如下图所示。<br><img src="http://p1b2dlbc2.bkt.clouddn.com/SBUS1.jpg" alt=""></p>
 </li>
