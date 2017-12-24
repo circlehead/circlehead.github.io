@@ -404,27 +404,7 @@ void USART2_IRQHandler(void)  //串口2中断函数
 } </code></pre>
 
 <p>2.将S.BUS中25字节数据解析成16通道数据函数</p>
-<p><pre><code>void Process(uint8_t<em> raw,uint16_t</em> result)<br>{<br>  uint8_t bitsToRead=3; // bitsToRead表示需要从下一字节读取多少位 bitsToRead每次总是增加3<br>  uint8_t bitsToShift;<br>  uint8_t startByte=21;<br>  uint8_t channelId=15;<br>  do<br>  {<br>    result[channelId]=raw[startByte];</code></pre></p>
-<pre><code>if(bitsToRead&lt;=8)
-{
-  result[channelId]&lt;&lt;=bitsToRead;
-  bitsToShift=8-bitsToRead;
-  result[channelId]+=(raw[startByte-1]&gt;&gt;bitsToShift);
-}
-else
-{
-  result[channelId]&lt;&lt;=8;
-  result[channelId]+=raw[startByte-1];
-  startByte--;
-  bitsToRead-=8;
-  bitsToShift=8-bitsToRead;
-  result[channelId]+=(raw[startByte-1]&gt;&gt;bitsToShift);
-}
-result[channelId]&amp;=0x7FF;
-channelId--;
-startByte--;
-bitsToRead+=3;
-</code></pre><p>  }while(startByte&gt;0);<br>}</p>
+<p><pre><code>void Process(uint8_t<em> raw,uint16_t</em> result)<br>{<br>  uint8_t bitsToRead=3; // bitsToRead表示需要从下一字节读取多少位 bitsToRead每次总是增加3<br>  uint8_t bitsToShift;<br>  uint8_t startByte=21;<br>  uint8_t channelId=15;<br>  do<br>  {<br>    result[channelId]=raw[startByte];<br>    if(bitsToRead&lt;=8)<br>    {<br>      result[channelId]&lt;&lt;=bitsToRead;<br>      bitsToShift=8-bitsToRead;<br>      result[channelId]+=(raw[startByte-1]&gt;&gt;bitsToShift);<br>    }<br>    else<br>    {<br>      result[channelId]&lt;&lt;=8;<br>      result[channelId]+=raw[startByte-1];<br>      startByte–;<br>      bitsToRead-=8;<br>      bitsToShift=8-bitsToRead;<br>      result[channelId]+=(raw[startByte-1]&gt;&gt;bitsToShift);<br>    }<br>    result[channelId]&amp;=0x7FF;<br>    channelId–;<br>    startByte–;<br>    bitsToRead+=3;<br>  }while(startByte&gt;0);<br>}</code></pre></p>
 <h2 id="三-总结"><a href="#三-总结" class="headerlink" title="三.总结"></a>三.总结</h2><p>结合以上硬件方法和软件程序我们就能够轻松解析S.BUS数据，其中程序移植也是非常方便的。</p>
 
           
