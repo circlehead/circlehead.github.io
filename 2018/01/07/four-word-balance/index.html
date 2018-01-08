@@ -94,7 +94,7 @@
 <meta property="og:image" content="http://img.blog.csdn.net/20131229163153765?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3lvdXN1aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20131229163234187?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3lvdXN1aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20131229163325875?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3lvdXN1aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2018-01-08T03:22:24.552Z">
+<meta property="og:updated_time" content="2018-01-08T03:23:31.391Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="四字节内存对齐">
 <meta name="twitter:description" content="对四字节对齐描述的非常详细，图片配合的也很好-非原创">
@@ -361,7 +361,7 @@
 
       
         <p><img src="http://p1b2dlbc2.bkt.clouddn.com/%E5%9B%9B%E5%AD%97%E8%8A%82%E5%AF%B9%E9%BD%90.jpg" alt=""><br>对四字节对齐描述的非常详细，图片配合的也很好-非原创<br><a id="more"></a></p>
-<p>首先我们先看看下面的C语言的结构体：<br><figure class="highlight plain"><figcaption><span>struct MemAlign</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	int a;</span><br><span class="line">	char b[3];</span><br><span class="line">	int c;</span><br><span class="line">&#125;MemAlign;</span><br></pre></td></tr></table></figure></p>
+<p>首先我们先看看下面的C语言的结构体：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">typedef struct MemAlign</span><br><span class="line">&#123;</span><br><span class="line">	int a;</span><br><span class="line">	char b[3];</span><br><span class="line">	int c;</span><br><span class="line">&#125;MemAlign;</span><br></pre></td></tr></table></figure></p>
 <p>以上这个结构体占用内存多少空间呢？也许你会说，这个简单，计算每个类型的大小，将它们相加就行了，以32为平台为例，int类型占4字节，char占用1字节，所以：4 + 3 + 4 = 11，那么这个结构体一共占用11字节空间。好吧，那么我们就用实践来证明是否正确，我们用sizeof运算符来求出这个结构体占用内存空间大小，sizeof(MemAlign)，出乎意料的是，结果居然为12？看来我们错了？当然不是，而是这个结构体被优化了，这个优化有个另外一个名字叫“对齐”，那么这个对齐到底做了什么样的优化呢，听我慢慢解释，再解释之前我们先看一个图，图如下：</p><p></p>
 <p></p><p><img alt="" src="http://img.blog.csdn.net/20131229162304718?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3lvdXN1aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" width="747" height="587"></p><p></p>
 <p></p><p>&nbsp;&nbsp;&nbsp;&nbsp;相信学过汇编的朋友都很熟悉这张图，这张图就是CPU与内存如何进行数据交换的模型，其中，左边蓝色的方框是CPU，右边绿色的方框是内存，内存上面的0～3是内存地址。这里我们这张图是以32位CPU作为代表，我们都知道，32位CPU是以双字（DWORD）为单位进行数据传输的，也正因为这点，造成了另外一个问题，那么这个问题是什么呢？这个问题就是，既然32位CPU以双字进行数据传输，那么，如果我们的数据只有8位或16位数据的时候，是不是CPU就按照我们数据的位数来进行数据传输呢？其答案是否定的，如果这样会使得CPU硬件变的更复杂，所以32位CPU传输数据无论是8位或16位都是以双字进行数据传输。那么也罢，8位或16位一样可以传输，但是，事情并非像我们想象的那么简单，比如，一个int类型4字节的数据如果放在上图内存地址1开始的位置，那么这个数据占用的内存地址为1～4，那么这个数据就被分为了2个部分，一个部分在地址0～3中，另外一部分在地址4～7中，又由于32位CPU以双字进行传输，所以，CPU会分2次进行读取，一次先读取地址0～3中内容，再一次读取地址4～7中数据，最后CPU提取并组合出正确的int类型数据，舍弃掉无关数据。那么反过来，如果我们把这个int类型4字节的数据放在上图从地址0开始的位置会怎样呢？读到这里，也许你明白了，CPU只要进行一次读取就可以得到这个int类型数据了。没错，就是这样，这次CPU只用了一个周期就得到了数据，由此可见，对内存数据的摆放是多么重要啊，摆放正确位置可以减少CPU的使用资源。</p><p></p>
