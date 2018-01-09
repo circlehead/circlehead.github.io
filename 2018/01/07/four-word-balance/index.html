@@ -87,18 +87,18 @@
 <meta property="og:site_name" content="永兵的个人站">
 <meta property="og:description" content="对四字节对齐描述的非常详细，图片配合的也很好-非原创">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://p1b2dlbc2.bkt.clouddn.com/%E5%9B%9B%E5%AD%97%E8%8A%82%E5%AF%B9%E9%BD%90.jpg">
+<meta property="og:image" content="http://p1b2dlbc2.bkt.clouddn.com/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8.jpg">
 <meta property="og:image" content="http://img.blog.csdn.net/20131229162304718?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3lvdXN1aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20131229162842125?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3lvdXN1aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20131229163039406?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3lvdXN1aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20131229163153765?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3lvdXN1aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20131229163234187?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3lvdXN1aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20131229163325875?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3lvdXN1aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2018-01-08T03:23:31.391Z">
+<meta property="og:updated_time" content="2018-01-09T07:51:46.620Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="四字节内存对齐">
 <meta name="twitter:description" content="对四字节对齐描述的非常详细，图片配合的也很好-非原创">
-<meta name="twitter:image" content="http://p1b2dlbc2.bkt.clouddn.com/%E5%9B%9B%E5%AD%97%E8%8A%82%E5%AF%B9%E9%BD%90.jpg">
+<meta name="twitter:image" content="http://p1b2dlbc2.bkt.clouddn.com/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8.jpg">
 
 
 
@@ -360,7 +360,7 @@
       
 
       
-        <p><img src="http://p1b2dlbc2.bkt.clouddn.com/%E5%9B%9B%E5%AD%97%E8%8A%82%E5%AF%B9%E9%BD%90.jpg" alt=""><br>对四字节对齐描述的非常详细，图片配合的也很好-非原创<br><a id="more"></a></p>
+        <p><img src="http://p1b2dlbc2.bkt.clouddn.com/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8.jpg" alt=""><br>对四字节对齐描述的非常详细，图片配合的也很好-非原创<br><a id="more"></a></p>
 <p>首先我们先看看下面的C语言的结构体：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">typedef struct MemAlign</span><br><span class="line">&#123;</span><br><span class="line">	int a;</span><br><span class="line">	char b[3];</span><br><span class="line">	int c;</span><br><span class="line">&#125;MemAlign;</span><br></pre></td></tr></table></figure></p>
 <p>以上这个结构体占用内存多少空间呢？也许你会说，这个简单，计算每个类型的大小，将它们相加就行了，以32为平台为例，int类型占4字节，char占用1字节，所以：4 + 3 + 4 = 11，那么这个结构体一共占用11字节空间。好吧，那么我们就用实践来证明是否正确，我们用sizeof运算符来求出这个结构体占用内存空间大小，sizeof(MemAlign)，出乎意料的是，结果居然为12？看来我们错了？当然不是，而是这个结构体被优化了，这个优化有个另外一个名字叫“对齐”，那么这个对齐到底做了什么样的优化呢，听我慢慢解释，再解释之前我们先看一个图，图如下：</p><p></p>
 <p></p><p><img alt="" src="http://img.blog.csdn.net/20131229162304718?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3lvdXN1aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" width="747" height="587"></p><p></p>
