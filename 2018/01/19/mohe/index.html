@@ -79,13 +79,13 @@
 
 
 
-<meta name="description" content="2015年12月   漠河北极村这一期主要记录下研一时期漠河地区的气象采集项目吧。">
+<meta name="description" content="2015年12月   漠河北极村这一期主要记录下研一时期漠河地区的气象采集项目。">
 <meta name="keywords" content="漠河">
 <meta property="og:type" content="article">
-<meta property="og:title" content="mohe">
+<meta property="og:title" content="漠河">
 <meta property="og:url" content="http://yoursite.com/2018/01/19/mohe/index.html">
 <meta property="og:site_name" content="永兵的个人站">
-<meta property="og:description" content="2015年12月   漠河北极村这一期主要记录下研一时期漠河地区的气象采集项目吧。">
+<meta property="og:description" content="2015年12月   漠河北极村这一期主要记录下研一时期漠河地区的气象采集项目。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://p1b2dlbc2.bkt.clouddn.com/%E6%BC%A0%E6%B2%B3.png">
 <meta property="og:image" content="http://p1b2dlbc2.bkt.clouddn.com/progrom1.png">
@@ -109,10 +109,10 @@
 <meta property="og:image" content="http://p1b2dlbc2.bkt.clouddn.com/psb%20%2824%29.jpg">
 <meta property="og:image" content="http://p1b2dlbc2.bkt.clouddn.com/IMG_20160103_124710.jpg">
 <meta property="og:image" content="http://p1b2dlbc2.bkt.clouddn.com/IMG_20160101_102448.jpg">
-<meta property="og:updated_time" content="2018-01-19T15:54:19.528Z">
+<meta property="og:updated_time" content="2018-01-19T16:18:17.291Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="mohe">
-<meta name="twitter:description" content="2015年12月   漠河北极村这一期主要记录下研一时期漠河地区的气象采集项目吧。">
+<meta name="twitter:title" content="漠河">
+<meta name="twitter:description" content="2015年12月   漠河北极村这一期主要记录下研一时期漠河地区的气象采集项目。">
 <meta name="twitter:image" content="http://p1b2dlbc2.bkt.clouddn.com/%E6%BC%A0%E6%B2%B3.png">
 
 
@@ -149,7 +149,7 @@
 
 
 
-  <title>mohe | 永兵的个人站</title>
+  <title>漠河 | 永兵的个人站</title>
   
 
 
@@ -303,7 +303,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">mohe</h1>
+          <h1 class="post-title" itemprop="name headline">漠河</h1>
         
 
         <div class="post-meta">
@@ -375,27 +375,27 @@
       
 
       
-        <p><img src="http://p1b2dlbc2.bkt.clouddn.com/%E6%BC%A0%E6%B2%B3.png" alt=""><br>2015年12月   漠河北极村<br>这一期主要记录下研一时期漠河地区的气象采集项目吧。<a id="more"></a>   </p>
-<h3 id="整体技术概括"><a href="#整体技术概括" class="headerlink" title="整体技术概括"></a>整体技术概括</h3><p>大四毕业记得是6月28号回家的，在家一个月左右，不能处在学习状态，让我十分难受，于8月3号就提前来到了学校。开始着手了硕士期间的第一个项目，漠河地区的气象采集项目。<br>做这个检测系统就和搭积木一样，把每个部分功能逐渐调通，最后汇总在一起，就实现了最终的功能，只是在程序调试的过程中需要极大的耐心和细心。<br>下面就是介绍下这个项目： 总体功能就是采集漠河河面的风速、风向、太阳辐射、温度信息，在本地存储后将数据发送回实验室。主要的技术涉及以下几个方面吧   </p>
+        <p><img src="http://p1b2dlbc2.bkt.clouddn.com/%E6%BC%A0%E6%B2%B3.png" alt=""><br>2015年12月   漠河北极村<br>这一期主要记录下研一时期漠河地区的气象采集项目。<a id="more"></a>   </p>
+<h3 id="整体技术概括"><a href="#整体技术概括" class="headerlink" title="整体技术概括"></a>整体技术概括</h3><p>大四毕业记得是6月28号回家的，在家一个月左右，不能处在学习状态，让我十分难受，于8月3号就提前来到了学校。开始着手了硕士期间的第一个项目-漠河地区的气象采集。<br>做这个检测系统就和搭积木一样，把每个部分功能逐渐调通，最后汇总在一起，就实现了最终的功能，只是在程序调试的过程中需要极大的耐心和细心。<br>下面就是介绍这个项目： 总体功能就是采集漠河河面的风速、风向、太阳辐射、温度信息，在本地存储后将数据发送回实验室，MCU 选用的msp430f149。主要的技术涉及以下几个方面。   </p>
 <hr>
 <ol>
-<li>传感器数据信号的采集（有模拟量、有数字量）</li>
+<li>传感器数据信号的采集（有模拟量、数字量）</li>
 <li>采集时间点的设定（需要一个外部时钟系统）</li>
 <li>本地大量数据的存储（结合FatFS文件系统利用SD卡实现）</li>
 <li>远程数据的无线传输（利用GPRS实现）</li>
-<li>为了实现低功耗，采集数据不可能实时发送，每天发送一次数据的配合关系</li>
+<li>为了实现低功耗，采集数据不能实时发送，每天发送一次数据的配合关系</li>
 <li>接收数据端TCP Sever服务器的软件编写和数据库</li>
 <li>为了实现远程设备的控制，设定了特定的指令和通信协议，要求终端能够解析这些协议。</li>
 <li>野外的光伏充电系统</li>
 <li>用于现场测试的备用程序</li>
 </ol>
 <hr>
-<p>看似简单的系统，要能调配好系统的整体运行还是需要花费大量时间来调试的，实际的过程也是这样，从硬件设计焊接到软件实现，整整用了三个半月时间吧，时间长的另外一个原因是研一课也多，矩阵论、数理统计、英语、政治…后期还要应付考试，还好这一切都挺过来了。<br>来一张硬件终端整体工作流程图<br><img src="http://p1b2dlbc2.bkt.clouddn.com/progrom1.png" alt=""><br>服务器端的简单工作流程<br><img src="http://p1b2dlbc2.bkt.clouddn.com/progrom2.png" alt=""><br>整个项目基本是一个人独立完成的。<br>最终的终端采集设备是这样的。<br><img src="http://p1b2dlbc2.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720160309140113.jpg" alt=""><br>好啦，整体系统就是这个样了，具体细节想了解的可以call me，纪念那一年吧。</p>
+<p>看似简单的系统，要能调配好系统的整体运行还是需要花费大量时间来调试的，实际的过程也是这样，从硬件设计焊接到软件实现，整整用了三个半月时间吧，时间长的另外一个原因是研一课多，矩阵论、数理统计、英语、政治…后期还要应付考试，还好这一切都挺过来了。<br>来一张硬件终端整体工作流程图<br><img src="http://p1b2dlbc2.bkt.clouddn.com/progrom1.png" alt=""><br>服务器端的简单工作流程<br><img src="http://p1b2dlbc2.bkt.clouddn.com/progrom2.png" alt=""><br>整个项目基本是一个人独立完成的。<br>最终的终端采集设备是这样的。<br><img src="http://p1b2dlbc2.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720160309140113.jpg" alt=""><br>好啦，整体系统就是这个样了，具体细节想了解的可以call me，纪念那一年吧。</p>
 <hr>
 <p>牛逼的分割线，下面就是人文部分了</p>
-<h3 id="安装之旅"><a href="#安装之旅" class="headerlink" title="安装之旅"></a>安装之旅</h3><p>设备开（nue）发（si）好（wo）了，这时候也差不多快到安装的时间了，因为这是个大项目，其他课题组负责了冰情检测。 12月底我们就准备去漠河安装设备了。冬日，在太原火车站候车照片，部分大型设备已经托运过去。<br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20151225_200746.jpg" alt=""><br>东北地区辽阔的土地和晚霞。<br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20151226_154221.jpg" alt=""><br>没想到从哈尔滨到漠河还需要14个小时左右的车程，沿途是这样的<br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20151227_102315.jpg" alt=""><br>这样的<br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20151227_102947.jpg" alt=""><br>很慢的绿皮车，照样能到终点站-漠河站，毕竟是中国的最北点，数九寒天，依然阻挡不了热情的游客。而我们是肩负这“使命”来的。<br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20151227_114019.jpg" alt=""><br>漠河站<br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20151227_114150.jpg" alt=""><br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20151227_114508.jpg" alt=""><br>到漠河后当地水文局的人接待了我们，深深的感受到了东北人的热情，晚上住在了镇上的宾馆，宾馆外的景色。<br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20151227_121904.jpg" alt=""><br>漠河是个镇，我们还得北上去北极村。到北极村后，安排好住处后开始干活。<br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20151229_091448.jpg" alt=""><br>这天水科院的人也在漠河冰面上测量数据。<br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20151229_092104.jpg" alt=""><br>本来以为冰面试平的，结果…自己看吧！ 估计是融化再凝固反复的结果。看到远处的白色小房子了吗？那是俄罗斯的哨所，胆敢越界，枪炮伺候，哈哈！其实中俄友谊还是维持挺好的。<br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20151229_093140.jpg" alt=""><br>再来张现场调试的照片<br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20151229_160715.jpg" alt=""><br>外面的寒冷<br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20160101_101232.jpg" alt=""><br>临时休息的水文站<br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20160102_101644.jpg" alt=""><br>我们气象设备的安装，这个过程都是泪，不想说了，能活着回来就是命大了，啊！<br><img src="http://p1b2dlbc2.bkt.clouddn.com/psb%20%2815%29.jpg" alt=""><br>这一套是在冰面上安装的设备，另外课题组的。<br><img src="http://p1b2dlbc2.bkt.clouddn.com/psb%20%2824%29.jpg" alt=""><br>装完设备的最后一天我们去了当地的景点。<br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20160103_124710.jpg" alt=""><br>北极村的广场<br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20160101_102448.jpg" alt=""></p>
+<h3 id="安装之旅"><a href="#安装之旅" class="headerlink" title="安装之旅"></a>安装之旅</h3><p>设备开（nue）发（si）好（wo）了，这时候也快到安装的时间了，因为这是个大项目，其他课题组负责了冰情检测。 12月底我们就准备去漠河安装设备。冬日，在太原火车站候车照片，部分大型设备已经托运过去。<br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20151225_200746.jpg" alt=""><br>东北地区辽阔的土地和晚霞。<br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20151226_154221.jpg" alt=""><br>没想到从哈尔滨到漠河还需要14个小时左右的车程，沿途是这样的<br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20151227_102315.jpg" alt=""><br>这样的<br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20151227_102947.jpg" alt=""><br>很慢的绿皮车，照样能到终点站-漠河站，毕竟是中国的最北点，数九寒天依然阻挡不了热情的游客。而我们是肩负这“使命”来的。<br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20151227_114019.jpg" alt=""><br>漠河站<br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20151227_114150.jpg" alt=""><br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20151227_114508.jpg" alt=""><br>到漠河后当地水文局的人接待了我们，深深的感受到了东北人的热情，晚上住在了镇上的宾馆，宾馆外的景色。<br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20151227_121904.jpg" alt=""><br>漠河是个镇，我们还得北上去北极村。到北极村后，安排好住处后开始干活。<br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20151229_091448.jpg" alt=""><br>这天水科院的人也在漠河冰面上测量数据。<br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20151229_092104.jpg" alt=""><br>本来以为冰面是平的，结果…自己看吧！ 估计是融化再凝固反复的结果。看到远处的白色小房子了吗？那是俄罗斯的哨所，胆敢越界，枪炮伺候，哈哈！其实中俄友谊还是维持挺好的。<br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20151229_093140.jpg" alt=""><br>再来张现场调试的照片<br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20151229_160715.jpg" alt=""><br>外面的寒冷<br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20160101_101232.jpg" alt=""><br>临时休息的水位站<br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20160102_101644.jpg" alt=""><br>我们气象设备的安装，这个过程都是泪，不想说了，能活着回来就是命大了，啊！<br><img src="http://p1b2dlbc2.bkt.clouddn.com/psb%20%2815%29.jpg" alt=""><br>这一套是在冰面上安装的设备，另外课题组的。<br><img src="http://p1b2dlbc2.bkt.clouddn.com/psb%20%2824%29.jpg" alt=""><br>装完设备的最后一天我们去了当地的景点。<br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20160103_124710.jpg" alt=""><br>北极村的广场<br><img src="http://p1b2dlbc2.bkt.clouddn.com/IMG_20160101_102448.jpg" alt=""></p>
 <hr>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>有压力！实际应用不像平时学习或者模仿他人，而是实实在在投入了资本和设定了期限的，做不好是要为严重后果买单的，项目开始前担心做不出来，项目做完了担心性能和一些不可预见因素发生。总而言之这种不能规模化实现的工作，就是一门艺术，同样的功能每个人实现的方法都可能不一样，本科毕设也是做一个装置，当时就有这种感受了！<br>这次总体还算顺利。参与过、经历过，才有这种感受。想想很多人的创业，也许在激情中背负着压力，最终成功，这种感觉只有TMD自己知道。<br>不断的学习，引发更多的好奇心，让简单的生活充满乐趣！</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>有压力！实际应用不像平时学习或者模仿他人，而是实实在在投入了资本和设定了期限的，做不好是要为严重后果买单的，项目开始前担心做不出来，项目做完了担心性能和一些不可预见因素发生。总而言之这种不能规模化实现的工作，就是一门艺术，同样的功能每个人实现的方法都可能不一样，本科毕设也是做一套装置，当时就有这种感受了！<br>这次总体还算顺利。参与过、经历过，才有这种感受。想想很多人的创业，也许在激情中背负着压力，最终成功，这种感觉只有TMD自己知道。<br>不断的学习，引发更多的好奇心，让简单的生活充满乐趣！<br>从小在北方长大，对北方的雪和寒冷早就有了认识，去漠河反而有种回家的感觉，哈哈。</p>
 
       
     </div>
