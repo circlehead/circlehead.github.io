@@ -88,7 +88,7 @@
 <meta property="og:description" content="这里主要介绍一个很好用的调试组件usmart，大概就是智能串口…">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://p1b2dlbc2.bkt.clouddn.com/usmart.jpg">
-<meta property="og:updated_time" content="2018-04-05T14:42:37.318Z">
+<meta property="og:updated_time" content="2018-04-05T14:45:34.423Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="usmart 通过串口实现程序调试">
 <meta name="twitter:description" content="这里主要介绍一个很好用的调试组件usmart，大概就是智能串口…">
@@ -521,10 +521,7 @@ case 10://有10个参数
     res=(*(u32(*)())usmart_dev.funs[id].func)(temp[0],temp[1],temp[2],temp[3],temp[4],\
     temp[5],temp[6],temp[7],temp[8],temp[9]);
     break;
-</code></pre> }<br> usmart_get_runtime();//获取函数执行时间<br> if(rval==1)//需要返回值.<br> {<pre><code>if(usmart_dev.sptype==SP_TYPE_DEC)printf(&quot;=%lu;\r\n&quot;,res);//输出执行结果(10进制参数显示)
-else printf(&quot;=0X%X;\r\n&quot;,res);//输出执行结果(16进制参数显示)       
-</code></pre> }else printf(“;\r\n”);        //不需要返回值,直接输出结束<br> if(usmart_dev.runtimeflag)    //需要显示函数执行时间<br> { <pre><code>printf(&quot;Function Run Time:%d.%1dms\r\n&quot;,usmart_dev.runtime/10,usmart_dev.runtime%10);//打印函数执行时间 
-</code></pre> }<br>}</code></pre><br>这里需要重点分析下 <code>res=(*(u32(*)())usmart_dev.funs[id].func)(temp[0])</code> 这条语句，<br>首先 <code>u32(*)()</code> 是指向这类函数的函数指针，这类函数具有 返回值是u32类型且函数参数不定 这样的特征<br>我们再看 <code>(u32(*)())</code>是用来修饰 <code>usmart_dev.funs[id].func</code>其实就是个强制类型转换，<code>usmart_dev.funs[id].func</code>本身就是个<code>（void*）</code>类型的指针， 修饰完成后将<code>void*</code> 指针强制转化为返回类型是u32 函数参数不定的函数指针，最后通过添加<code>*</code> 和参数 即<code>(*())(temp[0])</code>后面的<code>temp[0]</code>确定函数参数，并且执行函数（此处待批正）。 结束！<br>函数也可以这样写：<br> <code>res=(*(u32(*)(u32,u32))usmart_dev.funs[id].func)(temp[0],temp[1]);</code> <h3 id="内容补充"><a href="#内容补充" class="headerlink" title="内容补充"></a>内容补充</h3></li>
+</code></pre> }<br> usmart_get_runtime();//获取函数执行时间<br> if(rval==1)//需要返回值.<br> {<br> if(usmart_dev.sptype==SP_TYPE_DEC)printf(“=%lu;\r\n”,res);//输出执行结果(10进制参数显示)<br> else printf(“=0X%X;\r\n”,res);//输出执行结果(16进制参数显示)<br> }else printf(“;\r\n”);        //不需要返回值,直接输出结束<br> if(usmart_dev.runtimeflag)    //需要显示函数执行时间<br> {<br> printf(“Function Run Time:%d.%1dms\r\n”,usmart_dev.runtime/10,usmart_dev.runtime%10);//打印函数执行时间<br> }<br>}</code></pre><br>这里需要重点分析下 <code>res=(*(u32(*)())usmart_dev.funs[id].func)(temp[0])</code> 这条语句，<br>首先 <code>u32(*)()</code> 是指向这类函数的函数指针，这类函数具有 返回值是u32类型且函数参数不定 这样的特征<br>我们再看 <code>(u32(*)())</code>是用来修饰 <code>usmart_dev.funs[id].func</code>其实就是个强制类型转换，<code>usmart_dev.funs[id].func</code>本身就是个<code>（void*）</code>类型的指针， 修饰完成后将<code>void*</code> 指针强制转化为返回类型是u32 函数参数不定的函数指针，最后通过添加<code>*</code> 和参数 即<code>(*())(temp[0])</code>后面的<code>temp[0]</code>确定函数参数，并且执行函数（此处待批正）。 结束！<br>函数也可以这样写：<br> <code>res=(*(u32(*)(u32,u32))usmart_dev.funs[id].func)(temp[0],temp[1]);</code> <h3 id="内容补充"><a href="#内容补充" class="headerlink" title="内容补充"></a>内容补充</h3></li>
 <li>指针具有四个要素：指针的类型，指针所指向的类型，指针指向的内存区，指针自身占据的内存。    </li>
 <li>&amp;a的运算结果是一个指针   </li>
 <li>变量三要素：由一定宽度无符号整数（Unsigned Integer）所表示的地址“数值”（Address Value）；对象的大小（Size）；可对该对象适用的“方法”（Method）和“运算”（Operation）。</li>
