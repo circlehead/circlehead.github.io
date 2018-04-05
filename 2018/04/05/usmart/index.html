@@ -88,7 +88,7 @@
 <meta property="og:description" content="这里主要介绍一个很好用的调试组件usmart，大概就是智能串口…">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://p1b2dlbc2.bkt.clouddn.com/usmart.jpg">
-<meta property="og:updated_time" content="2018-04-05T14:40:25.167Z">
+<meta property="og:updated_time" content="2018-04-05T14:42:37.318Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="usmart 通过串口实现程序调试">
 <meta name="twitter:description" content="这里主要介绍一个很好用的调试组件usmart，大概就是智能串口…">
@@ -469,7 +469,7 @@ else
     }
 }
 USART_RX_STA=0;//状态寄存器清空        
-</code></pre> }<br>}</code></pre><br><code>usmart_scan(void)</code>函数内<code>sta=usmart_dev.cmd_rec(USART_RX_BUF)</code>，比较关键，用于获取函数的 函数名、ID（数组<code>usmart_nametab[]</code>对应函数的下标）、参数个数，并将这些参数存储在结构体usmart_dev中，在查找数组名的过程中大量使用了指针，其中 <strong>去空格、字符比对</strong> 等实现方法都是非常值得借鉴的。    </li>
+</code></pre> }<br>}</code></pre><code>usmart_scan(void)</code>函数内<code>sta=usmart_dev.cmd_rec(USART_RX_BUF)</code>，比较关键，用于获取函数的 函数名、ID（数组<code>usmart_nametab[]</code>对应函数的下标）、参数个数，并将这些参数存储在结构体usmart_dev中，在查找数组名的过程中大量使用了指针，其中 <strong>去空格、字符比对</strong> 等实现方法都是非常值得借鉴的。    </li>
 <li>获得函数名、函数ID、函数参数后就是对应的函数执行了，即<code>usmart_dev.exe()</code>;<br><pre><code>//usamrt执行函数<br>//该函数用于最终执行从串口收到的有效函数.<br>//最多支持10个参数的函数,更多的参数支持也很容易实现.不过用的很少.一般5个左右的参数的函数已经很少见了.<br>//该函数会在串口打印执行情况.以:”函数名(参数1，参数2…参数N)=返回值”.的形式打印.<br>//当所执行的函数没有返回值的时候,所打印的返回值是一个无意义的数据.<br>void usmart_exe(void)<br>{<br> u8 id,i;<br> u32 res;<br> u32 temp[MAX_PARM];//参数转换,使之支持了字符串<br> u8 sfname[MAX_FNAME_LEN];//存放本地函数名<br> u8 pnum,rval;<br> id=usmart_dev.id;<br> if(id&gt;=usmart_dev.fnum)return;//不执行.<br> usmart_get_fname((u8*)usmart_dev.funs[id].name,sfname,&amp;pnum,&amp;rval);//得到本地函数名,及参数个数<br> printf(“\r\n%s(“,sfname);//输出正要执行的函数名<br> for(i=0;i&lt;pnum;i++)//输出参数<br> {<pre><code>if(usmart_dev.parmtype&amp;(1&lt;&lt;i))//参数是字符串
 {
     printf(&quot;%c&quot;,&apos;&quot;&apos;);             
