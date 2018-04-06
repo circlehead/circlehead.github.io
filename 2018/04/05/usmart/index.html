@@ -88,7 +88,7 @@
 <meta property="og:description" content="这里主要介绍一个很好用的调试组件usmart，大概就是智能串口…">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://p1b2dlbc2.bkt.clouddn.com/usmart.jpg">
-<meta property="og:updated_time" content="2018-04-05T14:45:34.423Z">
+<meta property="og:updated_time" content="2018-04-06T06:33:27.491Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="usmart 通过串口实现程序调试">
 <meta name="twitter:description" content="这里主要介绍一个很好用的调试组件usmart，大概就是智能串口…">
@@ -379,7 +379,7 @@
  }                   
  TIM_ClearITPendingBit(TIM4,TIM_IT_Update); //清除中断标志位    
 } </code></pre>
-定时中断内首次出现了 `usmart_dev.scan()`，  首先 `usmart_dev` 是由结构体`struct _m_usmart_dev`定义的变量，并进行了初始化。   
+定时中断内首次出现了 `usmart_dev.scan()`，首先 ```usmart_dev``` 是由结构体`struct _m_usmart_dev`定义的变量，并进行了初始化。   
 先来看看结构体struct _m_usmart_dev的声明是什么样的   
 <pre><code>//usmart控制管理器
 struct _m_usmart_dev
@@ -441,7 +441,7 @@ struct _m_usmart_nametab usmart_nametab[]=
  (void*)led_set,"void led_set(u8 sta)",
  (void*)test_fun,"void test_fun(void(*ledset)(u8),u8 sta)",    
 };</code></pre>     </li>
-<li>在定时中断函数内部执行 <code>usmart_dev.scan()</code>函数，也就是调用结构体内的函数指针指向的函数，下面是<code>usmart_scan()</code>的函数<br><pre><code>void usmart_scan(void)<br>{<br> u8 sta,len;<br> if(USART_RX_STA&amp;0x8000)//串口接收完成？<br> {                       <pre><code>len=USART_RX_STA&amp;0x3fff;              //得到此次接收到的数据长度
+<li>在定时中断函数内部执行 <code>usmart_dev.scan()</code>函数，也就是调用结构体内的函数指针指向的函数，下面是<code>usmart_scan()</code>的函数<br><pre><code>void usmart_scan(void)<br>{<br>u8 sta,len;<br>if(USART_RX_STA&amp;0x8000)//串口接收完成？<br>{                       <pre><code>len=USART_RX_STA&amp;0x3fff;              //得到此次接收到的数据长度
 USART_RX_BUF[len]=&apos;\0&apos;;               //在末尾加入结束符. 
 sta=usmart_dev.cmd_rec(USART_RX_BUF); //得到函数各个信息
 if(sta==0)usmart_dev.exe();           //执行函数 
@@ -469,7 +469,7 @@ else
     }
 }
 USART_RX_STA=0;//状态寄存器清空        
-</code></pre> }<br>}</code></pre><code>usmart_scan(void)</code>函数内<code>sta=usmart_dev.cmd_rec(USART_RX_BUF)</code>，比较关键，用于获取函数的 函数名、ID（数组<code>usmart_nametab[]</code>对应函数的下标）、参数个数，并将这些参数存储在结构体usmart_dev中，在查找数组名的过程中大量使用了指针，其中 <strong>去空格、字符比对</strong> 等实现方法都是非常值得借鉴的。    </li>
+</code></pre>}<br>}</code></pre><code>usmart_scan(void)</code>函数内<code>sta=usmart_dev.cmd_rec(USART_RX_BUF)</code>，比较关键，用于获取函数的 函数名、ID（数组<code>usmart_nametab[]</code>对应函数的下标）、参数个数，并将这些参数存储在结构体usmart_dev中，在查找数组名的过程中大量使用了指针，其中 <strong>去空格、字符比对</strong> 等实现方法都是非常值得借鉴的。    </li>
 <li>获得函数名、函数ID、函数参数后就是对应的函数执行了，即<code>usmart_dev.exe()</code>;<br><pre><code>//usamrt执行函数<br>//该函数用于最终执行从串口收到的有效函数.<br>//最多支持10个参数的函数,更多的参数支持也很容易实现.不过用的很少.一般5个左右的参数的函数已经很少见了.<br>//该函数会在串口打印执行情况.以:”函数名(参数1，参数2…参数N)=返回值”.的形式打印.<br>//当所执行的函数没有返回值的时候,所打印的返回值是一个无意义的数据.<br>void usmart_exe(void)<br>{<br> u8 id,i;<br> u32 res;<br> u32 temp[MAX_PARM];//参数转换,使之支持了字符串<br> u8 sfname[MAX_FNAME_LEN];//存放本地函数名<br> u8 pnum,rval;<br> id=usmart_dev.id;<br> if(id&gt;=usmart_dev.fnum)return;//不执行.<br> usmart_get_fname((u8*)usmart_dev.funs[id].name,sfname,&amp;pnum,&amp;rval);//得到本地函数名,及参数个数<br> printf(“\r\n%s(“,sfname);//输出正要执行的函数名<br> for(i=0;i&lt;pnum;i++)//输出参数<br> {<pre><code>if(usmart_dev.parmtype&amp;(1&lt;&lt;i))//参数是字符串
 {
     printf(&quot;%c&quot;,&apos;&quot;&apos;);             
@@ -483,7 +483,7 @@ USART_RX_STA=0;//状态寄存器清空
     else printf(&quot;0X%X&quot;,temp[i]);//16进制参数显示        
 }
 if(i!=pnum-1)printf(&quot;,&quot;);
-</code></pre> }<br> printf(“)”);<br> usmart_reset_runtime();    //计时器清零,开始计时   <strong><em>下面是开始执行各个函数实现对应的函数功能</em></strong><br> switch(usmart_dev.pnum)   //<strong><em>函数已确定 通过参数数量决定 执行</em></strong><br> {<pre><code>case 0://无参数(void类型)                                              
+</code></pre> }<br> printf(“)”);<br> usmart_reset_runtime();    //计时器清零,开始计时  下面是开始执行各个函数实现对应的函数功能<br> switch(usmart_dev.pnum)   //<strong><em>函数已确定 通过参数数量决定 执行</em></strong><br> {<pre><code>case 0://无参数(void类型)                                              
     res=(*(u32(*)())usmart_dev.funs[id].func)();
     break;
 case 1://有1个参数
@@ -520,33 +520,14 @@ case 9://有9个参数
 case 10://有10个参数
     res=(*(u32(*)())usmart_dev.funs[id].func)(temp[0],temp[1],temp[2],temp[3],temp[4],\
     temp[5],temp[6],temp[7],temp[8],temp[9]);
-    break;
-</code></pre> }<br> usmart_get_runtime();//获取函数执行时间<br> if(rval==1)//需要返回值.<br> {<br> if(usmart_dev.sptype==SP_TYPE_DEC)printf(“=%lu;\r\n”,res);//输出执行结果(10进制参数显示)<br> else printf(“=0X%X;\r\n”,res);//输出执行结果(16进制参数显示)<br> }else printf(“;\r\n”);        //不需要返回值,直接输出结束<br> if(usmart_dev.runtimeflag)    //需要显示函数执行时间<br> {<br> printf(“Function Run Time:%d.%1dms\r\n”,usmart_dev.runtime/10,usmart_dev.runtime%10);//打印函数执行时间<br> }<br>}</code></pre><br>这里需要重点分析下 <code>res=(*(u32(*)())usmart_dev.funs[id].func)(temp[0])</code> 这条语句，<br>首先 <code>u32(*)()</code> 是指向这类函数的函数指针，这类函数具有 返回值是u32类型且函数参数不定 这样的特征<br>我们再看 <code>(u32(*)())</code>是用来修饰 <code>usmart_dev.funs[id].func</code>其实就是个强制类型转换，<code>usmart_dev.funs[id].func</code>本身就是个<code>（void*）</code>类型的指针， 修饰完成后将<code>void*</code> 指针强制转化为返回类型是u32 函数参数不定的函数指针，最后通过添加<code>*</code> 和参数 即<code>(*())(temp[0])</code>后面的<code>temp[0]</code>确定函数参数，并且执行函数（此处待批正）。 结束！<br>函数也可以这样写：<br> <code>res=(*(u32(*)(u32,u32))usmart_dev.funs[id].func)(temp[0],temp[1]);</code> <h3 id="内容补充"><a href="#内容补充" class="headerlink" title="内容补充"></a>内容补充</h3></li>
+    break;    
+</code></pre>  }<br> usmart_get_runtime();//获取函数执行时间<br> if(rval==1)//需要返回值.<br> {<br> if(usmart_dev.sptype==SP_TYPE_DEC)printf(“=%lu;\r\n”,res);//输出执行结果(10进制参数显示)<br> else printf(“=0X%X;\r\n”,res);//输出执行结果(16进制参数显示)<br> }else printf(“;\r\n”);        //不需要返回值,直接输出结束<br> if(usmart_dev.runtimeflag)    //需要显示函数执行时间<br> {<br> printf(“Function Run Time:%d.%1dms\r\n”,usmart_dev.runtime/10,usmart_dev.runtime%10);//打印函数执行时间<br> }<br>}</code></pre><br>这里需要重点分析下 <code>res=(*(u32(*)())usmart_dev.funs[id].func)(temp[0])</code> 这条语句，<br>首先 <code>u32(*)()</code> 是指向这类函数的函数指针，这类函数具有 返回值是u32类型且函数参数不定 这样的特征<br>我们再看 <code>(u32(*)())</code>是用来修饰 <code>usmart_dev.funs[id].func</code>其实就是个强制类型转换，<code>usmart_dev.funs[id].func</code>本身就是个<code>（void*）</code>类型的指针， 修饰完成后将<code>void*</code> 指针强制转化为返回类型是u32 函数参数不定的函数指针，最后通过添加<code>*</code> 和参数 即<code>(*())(temp[0])</code>后面的<code>temp[0]</code>确定函数参数，并且执行函数（此处待批正）。 结束！<br>函数也可以这样写：<br> <code>res=(*(u32(*)(u32,u32))usmart_dev.funs[id].func)(temp[0],temp[1]);</code> <h3 id="内容补充"><a href="#内容补充" class="headerlink" title="内容补充"></a>内容补充</h3></li>
 <li>指针具有四个要素：指针的类型，指针所指向的类型，指针指向的内存区，指针自身占据的内存。    </li>
 <li>&amp;a的运算结果是一个指针   </li>
 <li>变量三要素：由一定宽度无符号整数（Unsigned Integer）所表示的地址“数值”（Address Value）；对象的大小（Size）；可对该对象适用的“方法”（Method）和“运算”（Operation）。</li>
-<li>sizeof（数组名）求出为整个数组所占的字节数<br>例如<br><pre><code>#include<stdio.h><br>int main()<br>{<br>int a[5]={1,2,3,4,5};<br>printf(“sizeof数组名=%d\n”,sizeof(a));<br>printf(“sizeof <em>数组名=%d\n”,sizeof(</em>a));<br>}</stdio.h></code></pre></li>
+<li>sizeof（数组名）求出为整个数组所占的字节数,例如<pre><code>#include<stdio.h><br>int main()<br>{<br>int a[5]={1,2,3,4,5};<br>printf(“sizeof数组名=%d\n”,sizeof(a));<br>printf(“sizeof <em>数组名=%d\n”,sizeof(</em>a));<br>}<br>运行结果<br>sizeof数组名=20<br>sizeof *数组名=4</stdio.h></code></pre> </li>
+<li>结构体在声明时可以使用pack（）进行字节对齐例如,下面历程中按照一字节对齐<br><pre><code>#pragma pack(1)<br>typedef struct FN<br>{<br> u8 year[4];<br> u8 mon[2];<br>#if DEBUG<br> u8 day[2];<br> u8 hour[2];<br> u8 min[3];<br>#else<br> u8 day[3];<br>#endif<br> u8 endflag[4];<br>}FN;//保存的文件: 20131026.CSV<br>#pragma pack()</code></pre><h3 id="总-结"><a href="#总-结" class="headerlink" title="总 结"></a>总 结</h3>分析了usmart的使用方法和程序的执行过程，尤其是最后部分对函数指针进行了剖析，总而言之，若想在不重新下载程序的前提下调用MCU内的函数，或者修改函数参数，那就使用usmart准没错！！！</li>
 </ol>
-<p>运行结果</p>
-<p>sizeof数组名=20<br>sizeof *数组名=4<br><br>5 结构体在声明时可以使用pack（）进行字节对齐例如</p>
-<pre><code>#pragma pack(1)
-typedef struct FN
-{
-    u8 year[4];
-    u8 mon[2];
-#if DEBUG
-    u8 day[2];
-    u8 hour[2];
-    u8 min[3];
-#else
-    u8 day[3];
-#endif
-    u8 endflag[4];
-}FN;//保存的文件: 20131026.CSV
-#pragma pack()
- </code></pre> 
-
-<h3 id="总-结"><a href="#总-结" class="headerlink" title="总 结"></a>总 结</h3><p>分析了usmart的使用方法和程序的执行过程，尤其是最后部分对函数指针进行了剖析，总而言之，若想在不重新下载程序的前提下调用MCU内的函数，或者修改函数参数，那就使用usmart准没错！！！</p>
 
       
     </div>
