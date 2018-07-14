@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="SBUS通信协议," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,22 +79,16 @@
 
 
 
-<meta name="description" content="总结最近用的S.BUS协议">
-<meta name="keywords" content="SBUS通信协议">
-<meta property="og:type" content="article">
-<meta property="og:title" content="s-bus通信协议及解析程序的实现">
-<meta property="og:url" content="http://yoursite.com/2017/12/24/s-bus/index.html">
+<meta name="description" content="唯有兴趣和爱不可辜负">
+<meta property="og:type" content="website">
+<meta property="og:title" content="永兵的个人站">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
 <meta property="og:site_name" content="永兵的个人站">
-<meta property="og:description" content="总结最近用的S.BUS协议">
+<meta property="og:description" content="唯有兴趣和爱不可辜负">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://p1b2dlbc2.bkt.clouddn.com/SBUS3.jpg">
-<meta property="og:image" content="http://p1b2dlbc2.bkt.clouddn.com/SBUS1.jpg">
-<meta property="og:image" content="http://p1b2dlbc2.bkt.clouddn.com/SBUS2.png">
-<meta property="og:updated_time" content="2018-04-05T12:26:13.953Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="s-bus通信协议及解析程序的实现">
-<meta name="twitter:description" content="总结最近用的S.BUS协议">
-<meta name="twitter:image" content="http://p1b2dlbc2.bkt.clouddn.com/SBUS3.jpg">
+<meta name="twitter:title" content="永兵的个人站">
+<meta name="twitter:description" content="唯有兴趣和爱不可辜负">
 
 
 
@@ -124,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/12/24/s-bus/"/>
+  <link rel="canonical" href="http://yoursite.com/page/2/"/>
 
 
 
 
 
-  <title>s-bus通信协议及解析程序的实现 | 永兵的个人站</title>
+  <title>永兵的个人站</title>
   
 
 
@@ -149,7 +143,8 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left 
+  page-home">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -252,9 +247,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-
-  <div id="posts" class="posts-expand">
+  <section id="posts" class="posts-expand">
     
+      
 
   
 
@@ -267,7 +262,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/24/s-bus/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/21/start/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="南永兵">
@@ -284,7 +279,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">s-bus通信协议及解析程序的实现</h1>
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/21/start/" itemprop="url">我创建的站</a></h1>
         
 
         <div class="post-meta">
@@ -296,8 +293,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-24T10:35:42+08:00">
-                2017-12-24
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-21T15:46:52+08:00">
+                2017-12-21
               </time>
             
 
@@ -319,8 +316,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/通信协议/" itemprop="url" rel="index">
-                    <span itemprop="name">通信协议</span>
+                  <a href="/categories/开始/" itemprop="url" rel="index">
+                    <span itemprop="name">开始</span>
                   </a>
                 </span>
 
@@ -356,58 +353,16 @@
       
 
       
-        <p><img src="http://p1b2dlbc2.bkt.clouddn.com/SBUS3.jpg" alt="">总结最近用的S.BUS协议<a id="more"></a><br>最近做一个项目需要用到无线遥控，在网上找到了一个某飞控的遥控器，总共有9个PWM输出通道，其中第九通道是可以在S.BUS信号和PWM之间任意切换的，使用非常方便，项目中因为要使用到具体的远程遥控数值，就只采用了S.BUS这种信号。看了S.BUS信号也是闷得，就在网上查资料，最终将它成功使用,网上也有很多好的讲解，这里我还是汇总下，附上相关程序。下面就详细介绍下S.BUS。</p>
-<h2 id="一-S-BUS协议"><a href="#一-S-BUS协议" class="headerlink" title="一. S.BUS协议"></a>一. S.BUS协议</h2><ol>
-<li><p>S-BUS协议实际上通过串口进行数据发送。但是需要注意的是，S-BUS的逻辑电平是反的，需用如下电路对电平反相，再接到串口的RXD管脚，转化电路如下图所示。<br><img src="http://p1b2dlbc2.bkt.clouddn.com/SBUS1.jpg" alt=""></p>
-</li>
-<li><p>串口配置为波特率100kbps（ 100000 ），8位数据，偶校验(even)，2位停止位，无流控。</p>
-</li>
-<li><p>每帧25个字节，帧格式如下，<a href="https://mbed.org/users/Digixx/notebook/futaba-s-bus-controlled-by-mbed/" target="_blank" rel="noopener">参考出处</a><br><strong>[Start Byte] [Data0] [Data1]…[Data21] [Flags][End Byte]</strong><br>两帧之间的时间间隔4ms（高速模式,串口接收中用超时检测区分每一帧数据），约7ms一帧。<br>其中：<br><strong>Start Byte</strong> = 0x0F。中间22个字节为16个通道的数据，每个通道用 11 bit表示，其中（22<em>8=11</em>16）范围是0-2047。<br><strong>End Byte</strong>根据S-BUS协议版本不同而不同。<br><br><strong>Flags</strong>的定义：<br><br>bit7 = ch17 = digital channel (0x80) <br><br>bit6 = ch18 = digital channel (0x40) <br><br>bit5 = Frame lost, equivalent red LED on receiver (0x20) <br><br>bit4 = failsafe activated (0x10) <br><br>bit3 = n/a <br><br>bit2 = n/a <br><br>bit1 = n/a <br><br>bit0 = n/a <br><br><strong>数据部分：</strong><br><br>如果把22个字节看作一个数的话，则数据部分采用小端模式。即若把数据按照<br><br><strong>[Data21][Data20]…[Data1][Data0]</strong><br>的顺序排列，则[Data21]的 bit 7 为MSB，<br>[Data0]的 bit 0 为LSB，<br>每 11 bit 为一个通道的数据。<br>Data[21]和[Data20]的高3位为通道16的值，以此类推。<br>借用一张图，来自网友：<br><img src="http://p1b2dlbc2.bkt.clouddn.com/SBUS2.png" alt=""><br>图中每两个字节中颜色相同的数据组合成一个11位的新数据。<br></p>
-</li>
-</ol>
-<h2 id="二-S-BUS解析程序"><a href="#二-S-BUS解析程序" class="headerlink" title="二.S.BUS解析程序"></a>二.S.BUS解析程序</h2><ol>
-<li>串口接收中断函数程序   </li>
-</ol>
-<pre><code>//S.BUS 无线串口接收程序，接收函数中使用定时器5做超时检测
-void USART2_IRQHandler(void)  //串口2中断函数
-{
-   u8 Res;
-   static uint8_t byteCNT = 0;
-   static uint32_t lastTime = 0;
-   uint32_t curTime;
-   uint32_t interval = 0;
-    //若果时间大于3毫秒，则认为是新一帧数据
-    if(lastTime == 0)
-      {
-       curTime =  TIM_GetCounter(TIM5);
-       lastTime = curTime;
-      }
-    else
-      {
-       curTime = TIM_GetCounter(TIM5);
-       interval = curTime - lastTime;
-       lastTime = curTime;                  
-           if(interval >= 30)//大于3毫秒，定时器选用的0.1毫秒定时，所以这里为30
-             {
-               if(byteCNT == 25 && uart4_cache1[0] == 0x0f && uart4_cache1[24] == 0x00)
-                  {
-                     memcpy(uart4_cache2, uart4_cache1, byteCNT);
-                     rc_captured = 1;
-                     USART_ITConfig(USART2, USART_IT_RXNE, DISABLE);//接收成功后关闭串口，下次需要接收新数据时在其他函数再打开
-                  }
-                     byteCNT = 0;
-             }
-         }
-  if(USART_GetITStatus(USART2, USART_IT_RXNE) != RESET)  
-    {
-     uart4_cache1[byteCNT++] =USART_ReceiveData(USART2);//(USART2->DR);//读取接收到的数据
-    } 
-} </code></pre>
-
-<p>2.将S.BUS中25字节数据解析成16通道数据函数</p>
-<p><pre><code>void Process(uint8_t<em> raw,uint16_t</em> result)<br>{<br>  uint8_t bitsToRead=3; // bitsToRead表示需要从下一字节读取多少位 bitsToRead每次总是增加3<br>  uint8_t bitsToShift;<br>  uint8_t startByte=21;<br>  uint8_t channelId=15;<br>  do<br>  {<br>    result[channelId]=raw[startByte];<br>    if(bitsToRead&lt;=8)<br>    {<br>      result[channelId]&lt;&lt;=bitsToRead;<br>      bitsToShift=8-bitsToRead;<br>      result[channelId]+=(raw[startByte-1]&gt;&gt;bitsToShift);<br>    }<br>    else<br>    {<br>      result[channelId]&lt;&lt;=8;<br>      result[channelId]+=raw[startByte-1];<br>      startByte–;<br>      bitsToRead-=8;<br>      bitsToShift=8-bitsToRead;<br>      result[channelId]+=(raw[startByte-1]&gt;&gt;bitsToShift);<br>    }<br>    result[channelId]&amp;=0x7FF;<br>    channelId–;<br>    startByte–;<br>    bitsToRead+=3;<br>  }while(startByte&gt;0);<br>} </code></pre></p>
-<h2 id="三-总结"><a href="#三-总结" class="headerlink" title="三.总结"></a>三.总结</h2><p>结合以上硬件方法和软件程序我们就能够轻松解析S.BUS数据，其中程序移植也是非常方便的。</p>
-
+        
+          <p><img src="http://p1b2dlbc2.bkt.clouddn.com/1.jpg" alt="青春"><br>第一次建站，以后多多总结，多多分享…
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/12/21/start/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
       
     </div>
     
@@ -422,40 +377,14 @@ void USART2_IRQHandler(void)  //串口2中断函数
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/SBUS通信协议/" rel="tag"># SBUS通信协议</a>
-          
-        </div>
+
+      
+
       
 
       
       
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/12/21/start/" rel="next" title="我创建的站">
-                <i class="fa fa-chevron-left"></i> 我创建的站
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/12/28/teacher/" rel="prev" title="绵阳平武一段经历">
-                绵阳平武一段经历 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
+        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -465,11 +394,14 @@ void USART2_IRQHandler(void)  //串口2中断函数
   </article>
 
 
+    
+  </section>
 
-    <div class="post-spread">
-      
-    </div>
-  </div>
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
+
 
 
           </div>
@@ -477,10 +409,6 @@ void USART2_IRQHandler(void)  //串口2中断函数
 
 
           
-
-  
-
-
 
         </div>
         
@@ -501,17 +429,8 @@ void USART2_IRQHandler(void)  //串口2中断函数
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -577,22 +496,6 @@ void USART2_IRQHandler(void)  //串口2中断函数
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-S-BUS协议"><span class="nav-number">1.</span> <span class="nav-text">一. S.BUS协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-S-BUS解析程序"><span class="nav-number">2.</span> <span class="nav-text">二.S.BUS解析程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-总结"><span class="nav-number">3.</span> <span class="nav-text">三.总结</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -733,10 +636,6 @@ void USART2_IRQHandler(void)  //串口2中断函数
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
-
-
 
   
 
